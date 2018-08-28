@@ -1,0 +1,50 @@
+Add a recipe
+This resource a registered user's account
+---
+tags:
+  - Recipes
+parameters:
+  - name: category_id
+    in: path
+    type: integer
+    required: true
+  - name: body
+    in: body
+    type: string
+    required: true
+    schema:
+        id: create_recipe_input
+        properties:
+            recipe_name:
+                type: string
+                description: A user defined recipe in a category
+            ingredients:
+                type: string
+                description: Ingredients in a recipes seperated by ','
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Recipe created
+    content: application/json
+    schema:
+      id: create_recipe_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: Recipe created
+        recipe_id:
+          type: integer
+          description: The id of the created recipe
+        category_name:
+          type: string
+          description: Name of the category underwhich the recipe was recipe
+        recipe_name:
+          type: string
+          description: The name of the recipe created
+        ingredients:
+          type: array
+          items:
+              type: string
+          description: A list of ingredients in the recipe

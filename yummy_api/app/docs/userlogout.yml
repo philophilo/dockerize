@@ -1,0 +1,28 @@
+Logout
+This resource a registered user's account
+---
+tags:
+  - Authentication
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: logout_output_200
+      properties:
+        token:
+          type: string
+          description: Authentication token
+          default: logout was successful
+  401:
+    description: Un authorized, the resource requires authorization
+    content: application/json
+    schema:
+      id: logout_output_401
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error

@@ -1,0 +1,60 @@
+Update a recipe
+This resource a registered user's account
+---
+tags:
+  - Recipes
+parameters:
+  - name: category_id
+    in: path
+    required: true
+    type: integer
+    description: The category under which the recipes recipe is registered
+  - name: recipe_id
+    in: path
+    required: true
+    type: integer
+    description: The identifier of the recipe to be updated
+  - name: body
+    in: body
+    type: string
+    required: true
+    description: updated recipes details
+    schema:
+        id: update_recipe_input
+        properties:
+            recipe_name:
+                type: string
+                description: The updated recipe name
+            ingredients:
+                type: string
+                description: Updated set of ingredients seperated by ','
+            recipe_category_id:
+                type: integer
+                description: The updated category id of the recipe
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Recipe created
+    content: application/json
+    schema:
+      id: update_recipe_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: Recipe updated
+        recipe_id:
+          type: integer
+          description: The id of the updated recipe
+        category:
+          type: integer
+          description: The updated category id of the recipe
+        recipe_name:
+          type: string
+          description: The name of the recipe created
+        recipe_ingredients:
+          type: array
+          items:
+              type: string
+          description: A list of ingredients in the recipe

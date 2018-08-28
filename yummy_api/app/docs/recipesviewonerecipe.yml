@@ -1,0 +1,32 @@
+View one recipe
+This resource retrieves a particular recipe specified by a recipe id
+---
+tags:
+  - Recipes
+parameters:
+  - name: recipe_id
+    in: path
+    type: integer
+    required: true
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: view_one_recipe_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: recipe found
+        id:
+          type: integer
+          description: The id of the recipe retrieved
+        recipe_name:
+          type: string
+          description: The name of the recipe retrieved
+        ingredients:
+          type: string
+          description: The ingredients of the recipe

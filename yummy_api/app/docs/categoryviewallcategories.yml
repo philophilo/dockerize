@@ -1,0 +1,72 @@
+View all categories
+This resource shows all categories created by a user
+---
+tags:
+  - Categories
+parameters:
+  - name: page
+    in: path
+    type: integer
+    required: false
+    default: 1
+  - name: per_page
+    in: path
+    type: integer
+    default: 5
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: view_categories_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: categories found
+        categories:
+          type: array
+          items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The id of the retrieved category
+                category_name:
+                  type: string
+                  description: The category name of the retrieved category
+          description: A list of retrieved categories
+        current_page:
+          type: integer
+          description: The current page retrieved
+        next_page:
+          type: integer
+          description: The next page value if it exists
+        count:
+          type: integer
+          description: Number of categories retrieved
+        previous_page:
+          type: integer
+          description: The previous page retrived if it existed
+  400:
+    description: A bad request mainly as a result of invalid data
+    content: application/json
+    schema:
+      id: view_categories_output_400
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error
+  403:
+    description: Invalid request mainly requiering permissions
+    content: application/json
+    schema:
+      id: view_categories_output_403
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error

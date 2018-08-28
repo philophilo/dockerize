@@ -1,0 +1,29 @@
+Update a category
+This resource updates a particular category specified by a category id
+---
+tags:
+  - Categories
+parameters:
+  - name: category_id
+    in: path
+    type: integer
+    required: true
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: update_category_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: category updated
+        id:
+          type: integer
+          description: The id of the updated category
+        category_name:
+          type: string
+          description: The updated category name

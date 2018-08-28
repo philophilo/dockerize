@@ -1,0 +1,55 @@
+Search recipes
+This resource retrieves categories by search parameter q
+---
+tags:
+  - Recipes
+parameters:
+  - name: q
+    in: path
+    type: string
+    required: true
+    description: String, typically a recipe name being searched
+  - name: page
+    in: path
+    type: integer
+    required: false
+    default: 1
+    description: The page number to visit
+  - name: per_page
+    in: path
+    type: integer
+    default: 5
+    descrption: Limit number of records per page
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Success
+    content: application/json
+    schema:
+      id: search_recipe_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: Categories found
+        recipes:
+          type: array
+          items:
+              type: object
+              properties:
+                recipe_id:
+                  type: integer
+                  description: The id of the retrieved recipe
+                recipe_name:
+                  type: string
+                  description: The recipe name of the retrieved recipe
+                recipe_ingredients:
+                  type: string
+                  description: The ingredients of the recipe
+                category_id:
+                  type: string
+                  description: The category id of the recipes
+                category_name:
+                  type: string
+                  description: The category name underwhich the recipe falls

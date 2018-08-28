@@ -1,0 +1,52 @@
+Delete an account
+This resource a registered user's account
+---
+tags:
+  - Authentication
+parameters:
+  - name: body
+    in: body
+    type: string
+    required: true
+    schema:
+        id: delete_account_input
+        properties:
+            password:
+                type: string
+                description: user's authentication password
+security:
+    - TokenHeader: []
+responses:
+  204:
+    description: Deleted account
+    content: application/json
+  400:
+    description: A bad request mainly as a result of invalid data
+    content: application/json
+    schema:
+      id: delete_account_output_400
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error
+  401:
+    description: Un authorized, the resource requires authorization
+    content: application/json
+    schema:
+      id: delete_account_output_401
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error
+  403:
+    description: Invalid request mainly requiering permissions
+    content: application/json
+    schema:
+      id: delete_account_output_403
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: Incorrect password

@@ -1,0 +1,75 @@
+Create a category
+This resource a registered user's account
+---
+tags:
+  - Categories
+parameters:
+  - name: body
+    in: body
+    type: string
+    required: true
+    schema:
+        id: create_category_input
+        properties:
+            category_name:
+                type: string
+                description: A user defined category
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: create_category_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: category created
+        id:
+          type: integer
+          description: The id of the created category
+        category_name:
+          type: string
+          description: The name of the created category
+  400:
+    description: A bad request mainly as a result of invalid data
+    content: application/json
+    schema:
+      id: create_category_output_400
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error
+  401:
+    description: Unauthorized, the resource requires authorization
+    content: application/json
+    schema:
+      id: create_category_output_401
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error
+  403:
+    description: Invalid request mainly requiering permissions
+    content: application/json
+    schema:
+      id: create_category_output_403
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: some_error
+  409:
+    description: Conflict, a similar record already exists
+    content: application/json
+    schema:
+      id: create_category_output_409
+      properties:
+        Error:
+          type: string
+          description: Error
+          default: Category name already exists

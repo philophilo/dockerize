@@ -1,0 +1,29 @@
+View one category
+This resource retrieves a particular category specified by a category id
+---
+tags:
+  - Categories
+parameters:
+  - name: category_id
+    in: path
+    type: integer
+    required: true
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: view_a_category_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: category found
+        id:
+          type: integer
+          description: The id of the category retrieved
+        category_name:
+          type: string
+          description: The name of the category retrieved

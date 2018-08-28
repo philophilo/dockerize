@@ -1,0 +1,50 @@
+View recipes in a category
+This resource shows all recipes in a specifies category id
+---
+tags:
+  - Recipes
+parameters:
+  - name: page
+    in: path
+    type: integer
+    required: false
+    default: 1
+  - name: per_page
+    in: path
+    type: integer
+    default: 5
+  - name: category_id
+    in: path
+    type: integer
+    required: true
+    description: The category from which to extract recipes
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Recipes found
+    content: application/json
+    schema:
+      id: view_category_recipes_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: recipes found
+        recipes:
+          type: array
+          items:
+              type:string
+          description: A list of retrieved recipes
+        current_page:
+          type: integer
+          description: The current page retrieved
+        next_page:
+          type: integer
+          description: The next page value if it exists
+        count:
+          type: integer
+          description: Number of recipes retrieved
+        previous_page:
+          type: integer
+          description: The previous page retrived if it existed

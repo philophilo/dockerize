@@ -1,0 +1,47 @@
+Search categories
+This resource retrieves categories by search parameter q
+---
+tags:
+  - Categories
+parameters:
+  - name: q
+    in: path
+    type: string
+    required: true
+    description: String, typically a category name being searched
+  - name: page
+    in: path
+    type: integer
+    required: false
+    default: 1
+    description: The page number to visit
+  - name: per_page
+    in: path
+    type: integer
+    default: 5
+    descrption: Limit number of records per page
+
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Success
+    content: application/json
+    schema:
+      id: search_category_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: Categories found
+        categories:
+          type: array
+          items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  description: The id of the retrieved category
+                category_name:
+                  type: string
+                  description: The category name of the retrieved category

@@ -1,0 +1,29 @@
+Delete a recipe
+This resource deletes a particular recipe specified by a recipe id
+---
+tags:
+  - Recipes
+parameters:
+  - name: category_id
+    in: path
+    type: integer
+    required: true
+    description: The category id of the recipe to be deleted
+  - name: recipe_id
+    in: path
+    type: integer
+    required: true
+    description: The id of the recipe to be deleted
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: delete_recipe_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: Recipe deleted

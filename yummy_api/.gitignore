@@ -1,0 +1,16 @@
+.coveragerc
+.coverage
+.ropeproject
+.git/
+.DS_Store
+.vscode/
+app/__pycache__/
+tests/__pycache__/
+venvapi/
+migrations/
+htmlcov/
+__pycache__/
+app/__init__.pyc
+app/config.pyc
+app/models.pyc
+app/views.pyc

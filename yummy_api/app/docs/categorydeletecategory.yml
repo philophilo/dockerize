@@ -1,0 +1,24 @@
+Delete a category
+This resource deletes a particular category specified by a category id
+---
+tags:
+  - Categories
+parameters:
+  - name: category_id
+    in: path
+    type: integer
+    required: true
+    description: The id of the category to be deleted
+security:
+    - TokenHeader: []
+responses:
+  200:
+    description: Login successful
+    content: application/json
+    schema:
+      id: delete_category_output
+      properties:
+        message:
+          type: string
+          description: Success message
+          default: category deleted

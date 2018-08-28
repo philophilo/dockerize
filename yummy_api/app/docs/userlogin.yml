@@ -1,0 +1,49 @@
+Login
+This resource Logs in registered users
+---
+tags:
+  - Authentication
+parameters:
+  - name: body
+    in: body
+    type: string
+    required: true
+    schema:
+        id: login_input
+        properties:
+            username:
+                type: string
+                description: user's nick name
+            password:
+                type: string
+                description: user' password for authentication
+responses:
+  200:
+      description: Login successful
+      content: application/json
+      schema:
+          id: login_output_200
+          properties:
+              token:
+                  type: string
+                  description: Authentication token
+  400:
+      description: A bad request mainly as a result of invalid data
+      content: application/json
+      schema:
+          id: login_output_400
+          properties:
+            Error:
+                type: string
+                description: Error
+                default: some_error
+  403:
+      description: Invalid request mainly requiering permissions
+      content: application/json
+      schema:
+          id: login_output_403
+          properties:
+            Error:
+                type: string
+                description: Error
+                default: some_error
