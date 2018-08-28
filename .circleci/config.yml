@@ -1,0 +1,92 @@
+default: &defaults
+  docker:
+    - image: 'philophilo/awskube'
+      environment:
+        TestingConfig: 'TestingConfig'
+        DATABASE_URL: 'postgresql://postgres@localhost/postgres?sslmode=disable'
+    - image: 'circleci/postgres:9.6.5-alpine-ram'
+      environment:
+        POSTGRES_USER: circleci
+        POSTGRES_DB: test_db
+        POSTGRES_PASSWORD: ''
+  working_directory: ~/project
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run: mkdir test-reports
+      - restore_cache:
+          key: 'deps1-{{ .Branch }}-{{ checksum "yummy_api/requirements.txt" }}'
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            cd yummy_api/
+            pip install -r requirements.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            cd yummy_api/
+            nosetests --with-coverage --cover-package=app
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+      - store_test_results:
+          path: test-reports/
+  deploy:
+    docker:
+      - image: 'philophilo/awskube'
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            ls -la
+            pwd
+            docker-compose up -d
+            docker-compose push
+            echo ${BUCKET_NAME}
+      # - run:
+      #     name: Install aws cli
+      #     command: sudo apt-get -y -qq install awscli
+      # - run:
+      #     name: Install kubectl
+      #     command: |
+      #       curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.8.7/bin/linux/amd64/kubectl
+      #       chmod +x ./kubectl
+      #       sudo mv ./kubectl /usr/local/bin/kubectl
+      # - run:
+      #     name: Install kops
+      #     command: |
+      #       wget https://github.com/kubernetes/kops/releases/download/1.8.0/kops-linux-amd64
+      #       chmod +x kops-linux-amd64
+      #       mv kops-linux-amd64 /usr/local/bin/kops
+      - run:
+          name: List clusters
+          command: |
+            pwd
+            ls -la
+            bash k8s.sh
+    working_directory: ~/project
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: api_defence
