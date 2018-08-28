@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    restart: always
+    build: .
+    container_name: yummy
+    image: philophilo/yummy_api
+    ports:
+      - "80:80"
