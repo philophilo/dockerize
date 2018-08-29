@@ -58,7 +58,7 @@ jobs:
           name: List clusters
           command: |
             kops export kubecfg ${CLUSTER_NAME} --state=s3://${BUCKET_NAME}
-            kubectl apply -f ~/project/yummy_api/deployment.yml
+            kubectl apply -f ~/project/deployment.yml
     working_directory: ~/project
 
 workflows:
