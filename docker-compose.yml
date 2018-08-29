@@ -4,6 +4,6 @@ services:
     restart: always
     build: .
     container_name: yummy
-    image: philophilo/yummy_api
+    image: philophilo/yummy
     ports:
       - "80:80"
