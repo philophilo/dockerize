@@ -41,7 +41,7 @@ The deployment [configuration](https://github.com/philophilo/dockerize/blob/mast
 For deployment to occur, the cluster must be existing. The kubernetes cluster is created from an AWS instance and [configured](https://github.com/philophilo/jenkins-image/blob/56d161257777082b490d1ba275a9b7956f5323a4/kube.sh#L5-L101). 
 
 ## Deployed kubernetes application
-[http://a5c1fd288abda11e880da0268a383ddb-969378080.us-east-2.elb.amazonaws.com/apidocs/](http://a5c1fd288abda11e880da0268a383ddb-969378080.us-east-2.elb.amazonaws.com/apidocs/)
+[yummy.philophilo.xyz](http://yummy.philophilo.xyz/)
 
 # Yummy Recipes
 Yummy Recipes is an application that allow users to keep track of their owesome food recipes. It helps individuals who love to cook and eat good food to remember recipes and also share with others.
