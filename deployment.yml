@@ -10,7 +10,7 @@ spec:
         app: yummyapi
     spec:
       containers:
-        - name: apache
+        - name: yummy
           image: philophilo/yummy
           ports:
             - containerPort: 80

@@ -55,7 +55,7 @@ jobs:
             docker-compose up -d
             docker-compose push
       - run:
-          name: List clusters
+          name: Deploy
           command: |
             kops export kubecfg ${CLUSTER_NAME} --state=s3://${BUCKET_NAME}
             kubectl apply -f ~/project/deployment.yml
@@ -69,3 +69,6 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            branches:
+              only: master
