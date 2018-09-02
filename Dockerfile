@@ -21,4 +21,4 @@ RUN virtualenv venv && \
 WORKDIR /yummy_api
 ENV PATH=$PATH:/bin/bash
 
-CMD /bin/sh script.sh
+CMD ["/bin/sh", "script.sh"]
