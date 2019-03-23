@@ -55,6 +55,9 @@ jobs:
             docker-compose up -d
             docker-compose push
       - run:
+          command: |
+            . kube.sh
+      - run:
           name: Deploy
           command: |
             kops export kubecfg ${CLUSTER_NAME} --state=s3://${BUCKET_NAME}
