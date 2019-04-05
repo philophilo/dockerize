@@ -1,4 +1,5 @@
 default: &defaults
+  # use preconfigured docker image (contains kubectl, kops, awscli)
   docker:
     - image: 'philophilo/awskube'
       environment:
@@ -11,8 +12,10 @@ default: &defaults
         POSTGRES_PASSWORD: ''
   working_directory: ~/project
 
+# create circleci jobs
 version: 2
 jobs:
+  # build the application and run tests
   build:
     <<: *defaults
     steps:
@@ -23,22 +26,27 @@ jobs:
       - restore_cache:
           key: 'deps1-{{ .Branch }}-{{ checksum "yummy_api/requirements.txt" }}'
       - run:
+          name: install requirements
           command: |
+            # create virtual environment
             python3 -m venv venv
             . venv/bin/activate
             cd yummy_api/
             pip install -r requirements.txt
       - run:
+          name: run tests
           command: |
             . venv/bin/activate
             cd yummy_api/
+            # run nosetests along with coverage
             nosetests --with-coverage --cover-package=app
       - store_artifacts:
           path: test-reports/
           destination: tr1
       - store_test_results:
           path: test-reports/
-
+  
+  # deploy the application
   deploy:
     docker:
       - image: 'philophilo/awskube'
@@ -50,11 +58,16 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: create image
           command: |
+            # login to docker
             docker login -u $DOCKER_USER -p $DOCKER_PASS
+            # create image with docker compose
             docker-compose up -d
+            # push image to dockerhub with docker compose
             docker-compose push
       - run:
+          name: configure cluster
           command: |
             . kube.sh
       - run:
@@ -64,14 +77,17 @@ jobs:
             kubectl apply -f ~/project/deployment.yml
     working_directory: ~/project
 
+# run circleci jobs in a workflow
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build
       - deploy:
+          # run deploy job after build job
           requires:
             - build
           filters:
+            # run the deploy job only on master
             branches:
               only: master

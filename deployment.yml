@@ -1,33 +1,48 @@
 apiVersion: extensions/v1beta1
+# create a deployment
 kind: Deployment
 metadata:
+  # give the deployement a name
   name: yummyapi
 spec:
+  # allow only one replica to be used in the application
   replicas: 1
+  # describe pod to be created 
   template:
     metadata:
       labels:
         app: yummyapi
+    # create specification of the deployment
     spec:
+      # create a container with 
+      # name <yummy>
+      # us the image from dockerhub <philophilo/yummy>
+      # allow the port to run on port 80
       containers:
         - name: yummy
           image: philophilo/yummy
           ports:
             - containerPort: 80
 ---
+# create a service for the deployment
 apiVersion: v1
 kind: Service
 metadata:
   name: yummyapi
   labels:
     app: yummyapi
+# service specifications for the service
 spec:
+  # create a service with a loadbalancer
   type: LoadBalancer
+  # do not allow loadbalancer's IP to be propagated to the end pods
   externalTrafficPolicy: Cluster
+  # configure loadbalancer's port 80 to be target port 80 of deployment
   ports:
     - port: 80
       targetPort: 80
       nodePort: 31818
+  # select deployment with <app: yummyapi>
   selector:
     app: yummyapi
 

@@ -1,9 +1,15 @@
 version: '3'
 services:
+  # create a service called web
   web:
+    # always restart the container in case of failure
     restart: always
+    # set the context of build to the current directory
     build: .
+    # set the name of the container
     container_name: yummy
+    # set the name of the container
     image: philophilo/yummy
+    # map host port 80 to the cotainer's port 80
     ports:
       - "80:80"
